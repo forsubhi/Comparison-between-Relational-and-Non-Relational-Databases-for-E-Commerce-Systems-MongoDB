@@ -1,41 +1,37 @@
 package com.database.project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity
-@Table
+@Document
 @Getter
 @Setter
 public class InvoiceDetail {
-    @Id
-    @Column
-    @JsonIgnore
-    private String uuid;
 
-    @Column(name = "invoiceno")
+    @Id
+    private String id;
+
     private String invoiceNo;
-    @Column(name = "stockcode")
+
     private String stockCode;
-    @Column
+
     private String description;
-    @Column
+
     private Integer quantity;
-    @Column(name = "invoicedate")
-    private LocalDateTime invoiceDate;
-    @Column(name = "unitprice")
+
+    private String invoiceDate;
+
     private Float unitPrice;
-    @Column(name = "customerid")
+
     private Integer customerID;
-    @Column
+
     private String country;
-    @Column(name = "itemtotal")
+
     private Float itemTotal;
 }
