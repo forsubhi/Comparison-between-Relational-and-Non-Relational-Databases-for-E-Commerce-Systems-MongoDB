@@ -1,0 +1,42 @@
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+<script>
+google.charts.load('current', {
+  callback: function () {
+    drawChart();
+    window.addEventListener('resize', drawChart, false);
+  },
+  packages:['corechart']
+});
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Users', 'MongoDB', 'Postgres'],
+    ['10', 1000, 400],
+    ['100', 1170, 460],
+    ['1000', 660, 1120],
+    ['10000', 1030, 540]
+  ]);
+
+  var options = {
+    animation:{
+      duration: 1000,
+      easing: 'linear',
+      startup: true
+    },
+    height: 600,
+    hAxis: {
+      title: data.getColumnLabel(0)
+    },
+    vAxis: 
+    {
+     title: 'Time ms'
+    },
+    theme: 'material',
+    title: 'Database Insert Performance'
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('columnchart_material'));
+  chart.draw(data, options);
+}
+</script>
