@@ -4,7 +4,9 @@ import com.database.project.model.InvoiceDetail;
 import com.database.project.model.InvoiceDetailForInsert;
 import com.database.project.repository.InvoiceDetailRepository;
 import com.database.project.repository.InvoiceDetailRepositoryForInsert;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +28,15 @@ public class InvoiceDetailController {
     @Autowired
     InvoiceDetailRepositoryForInsert invoiceDetailRepositoryForInsert;
 
+    @Autowired
+    ApplicationContext applicationContext;
+
     @GetMapping("/sample")
     public ResponseEntity<List<InvoiceDetail>> getSample() {
         try {
             ArrayList invoiceDetails = new ArrayList<>();
             invoiceDetailRepository.findAll(Pageable.ofSize(10)).forEach(invoiceDetails::add);
+            MongoClient bean = applicationContext.getBean(MongoClient.class);
             return new ResponseEntity<>(invoiceDetails, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
