@@ -47,13 +47,13 @@ public class InvoiceDetailController {
     @PostMapping("/insert")
     public ResponseEntity<String> getAllTutorials(@RequestParam(required = false) String title) {
 
-       ArrayList<InvoiceDetailForInsert> invoiceDetails = new ArrayList();
+        ArrayList<InvoiceDetailForInsert> invoiceDetails = new ArrayList();
         try {
             for (int i = 0; i < 3; i++) {
                 InvoiceDetailForInsert invoiceDetailForInsert = new InvoiceDetailForInsert();
                 invoiceDetailForInsert.setId(UUID.randomUUID().toString());
                 invoiceDetailForInsert.setInvoiceDate(LocalDateTime.now().toString());
-                invoiceDetailForInsert.setInvoiceNo(String.valueOf(i+100));
+                invoiceDetailForInsert.setInvoiceNo(String.valueOf(i + 100));
                 invoiceDetailForInsert.setCountry("Test");
                 invoiceDetailForInsert.setDescription("Test Desc");
                 invoiceDetailForInsert.setQuantity(10);
@@ -66,6 +66,17 @@ public class InvoiceDetailController {
             invoiceDetailRepositoryForInsert.saveAll(invoiceDetails);
 
             return new ResponseEntity<>("Done", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/query")
+    public ResponseEntity<List<InvoiceDetail>> query(@RequestParam(required = false) String title) {
+        try {
+            List<InvoiceDetail> invoiceDetails = invoiceDetailRepository.findByCustomerID("18074");
+            return new ResponseEntity<>(invoiceDetails, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
